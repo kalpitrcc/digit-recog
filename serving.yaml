@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serving
+spec:
+  replicas: 3  # Adjust the number of replicas as per your requirement
+  selector:
+    matchLabels:
+      app: serving
+  template:
+    metadata:
+      labels:
+        app: serving
+    spec:
+      containers:
+      - name: serving-app
+        image: serving:latest  # Replace this with your actual FastAPI Docker image
+        command: ["python", "serve.py"]
+        ports:
+        - containerPort: 8000
+
+---
+
+# Service definition
+apiVersion: v1
+kind: Service
+metadata:
+  name: serving-service
+spec:
+  selector:
+    app: serving
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000
+  type: LoadBalancer

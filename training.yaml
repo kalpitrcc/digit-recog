@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: training
+spec:
+  completions: 1
+  backoffLimit: 0
+  template:
+    spec:
+      containers:
+      - name: training
+        image: training:latest  # Replace this with your actual Docker image
+        command: ["python", "train.py"]  # Replace this with the path to your executable script
+        # Add any other container configuration options here, such as env, args, etc.
+      restartPolicy: Never

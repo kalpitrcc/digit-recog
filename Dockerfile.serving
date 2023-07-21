@@ -1,0 +1,7 @@
+FROM python:3.10.12-slim
+RUN mkdir -p /opt/app
+RUN mkdir -p /opt/app/model
+WORKDIR /opt/app
+COPY serve.py serve.py
+COPY requirements.txt requirements.txt
+RUN pip install -r requirements.txt
